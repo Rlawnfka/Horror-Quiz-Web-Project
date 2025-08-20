@@ -67,6 +67,8 @@ body {
     width: 500px;
     height: 90px;
     background: #FA8ECF;
+        font-size: 40px;
+        color: #fff;  
     border: 10px solid #C10F86;
     border-radius: 20px;
     align-items: center;
@@ -80,7 +82,7 @@ body {
     justify-content: center;
     text-align: center;
     font-weight: bold;
-    font-size: 30px;
+    font-size: 40px;
     color: #ffffff;
 }
 
