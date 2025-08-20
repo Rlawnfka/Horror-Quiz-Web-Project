@@ -24,9 +24,9 @@
     const form = document.querySelector(".form-container");
     const input = document.querySelector(".nickname-input");
 
+    //// 사용자 닉네임 입력받기 ////
     form.addEventListener("submit", function(event) {
       const value = input.value.trim();
-
       if (value === "") {
         event.preventDefault();
         alert("닉네임을 입력해주세요!");
