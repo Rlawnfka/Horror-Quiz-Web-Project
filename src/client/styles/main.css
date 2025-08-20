@@ -1,5 +1,7 @@
-
-
+:root {
+    --primary-color: #C10F86;
+    --secondary-color: #FA8ECF;
+}
 @font-face {
     font-family: 'Cafe24Lovingu';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Lovingu.woff2') format('woff2');
@@ -126,7 +128,4 @@ body {
     text-align: center;
     font-weight: bold;
         z-index: 1;
-}:root {
-    --primary-color: #C10F86;
-    --secondary-color: #FA8ECF;
 }
