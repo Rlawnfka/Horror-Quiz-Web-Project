@@ -124,4 +124,7 @@ body {
     text-align: center;
     font-weight: bold;
         z-index: 1;
+}:root {
+    --primary-color: #C10F86;
+    --secondary-color: #FA8ECF;
 }
