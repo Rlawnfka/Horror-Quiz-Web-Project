@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WelCome!</title>
+    <link rel="stylesheet" href="./styles/main.css">
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">Find The Answer!</h1>
+    <p class="subtitle">전체화면으로 바꿔주세요. (F11)</p>
+
+    <form class="form-container" action="/submit" method="POST" novalidate>
+      <div class="input-container">
+        <input type="text" name="nickname" class="nickname-input" placeholder="닉네임을 입력하세요">
+        <button type="submit" class="main-button">시작하기</button>
+      </div>
+      <div class="character"></div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.querySelector(".form-container");
+    const input = document.querySelector(".nickname-input");
+
+    form.addEventListener("submit", function(event) {
+      const value = input.value.trim();
+
+      if (value === "") {
+        event.preventDefault();
+        alert("닉네임을 입력해주세요!");
+      } else if (value.length > 10) {
+        event.preventDefault();
+        alert("닉네임은 10글자를 넘을 수 없습니다!");
+      }
+    });
+  </script>
+</body>
+</html>

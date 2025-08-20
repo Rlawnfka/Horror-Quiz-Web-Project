@@ -1,0 +1,127 @@
+
+
+@font-face {
+    font-family: 'Cafe24Lovingu';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Lovingu.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    font-family: 'Cafe24Lovingu';
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+  background: url('../assets/images/main-page.png') no-repeat center center fixed;
+    min-height: 100vh;
+    position: relative;
+     /* overflow: hidden; */
+}
+
+
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+.subtitle {
+    position: absolute;
+    color: #C10F86;
+    font-size: 30px;
+    margin-bottom: 400px;
+    font-weight: 500;
+}
+.title {
+    color: #C10F86;
+    font-size: 130px;
+    font-weight: bold;
+    margin-bottom: 400px;
+    font-style: italic;
+}
+
+
+
+.form-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.nickname-input {
+    position: relative;
+    bottom: 160px;
+    left: 50px;
+    width: 500px;
+    height: 90px;
+    background: #FA8ECF;
+    border: 10px solid #C10F86;
+    border-radius: 20px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 1;
+}
+
+.nickname-input::placeholder {
+        align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: bold;
+    font-size: 30px;
+    color: #ffffff;
+}
+
+.main-button {
+    position: relative;
+        bottom: 160px;
+    left: 50px;
+    margin-top: 20px;
+        border-radius: 20px;
+    width: 200px;
+    background: #FA8ECF;
+    color: white;
+    border: 10px solid #C10F86;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+.character {
+    width: 120px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    position: relative;
+}
+
+.character::before {
+    position: absolute;
+    top: -70px;
+    left: 10px;
+    content: url('../assets/images/kitty-main.png');
+    white-space: pre;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    text-align: center;
+    font-weight: bold;
+        z-index: 1;
+}
