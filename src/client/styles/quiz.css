@@ -1,0 +1,64 @@
+@font-face {
+    font-family: 'Cafe24Lovingu';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Lovingu.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+* {
+    font-family: 'Cafe24Lovingu';
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background: url('../assets/images/quiz-background.png') no-repeat center center fixed;
+    min-height: 100vh;
+    text-align: center;
+    position: relative;
+     /* overflow: hidden; */
+}
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+.subtitle {
+    position: absolute;
+    color: #C10F86;
+    font-size: 30px;
+    margin-bottom: 250px;
+    font-weight: 500;
+}
+.title {
+    color: #C10F86;
+    font-size: 130px;
+    font-weight: bold;
+    margin-bottom: 100px;
+    font-style: italic;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.choice {
+    width: 600px;
+    padding: 20px;
+    border: none;
+    border-radius: 40px;
+    background-color: #FA8ECF;
+    color: #C10F86;
+    font-size: 20px;
+    transition: 0.3s;
+    text-align: center;
+}
+
+.choice:hover {
+    background-color: #ff348f;
+}
