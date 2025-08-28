@@ -1,0 +1,24 @@
+{
+  "name": "find-the-answer-project",
+  "version": "1.0.0",
+  "description": "상식 퀴즈와 공포 연출을 결합한 반전형 웹 프로젝트",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rlawnfka/Horror-Quiz-Web-Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rlawnfka/Horror-Quiz-Web-Project/issues"
+  },
+  "homepage": "https://github.com/Rlawnfka/Horror-Quiz-Web-Project#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  }
+}
