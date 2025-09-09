@@ -26,14 +26,32 @@
 
     //// 사용자 닉네임 입력받기 ////
     form.addEventListener("submit", function(event) {
+      event.preventDefault(); // 기본 제출 막기
+
       const value = input.value.trim();
+
       if (value === "") {
-        event.preventDefault();
         alert("닉네임을 입력해주세요!");
+        return;
       } else if (value.length > 10) {
         event.preventDefault();
         alert("닉네임은 10글자를 넘을 수 없습니다!");
+        return;
       }
+      fetch("/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: value })
+      })
+        .then(res => res.json())
+        .then(data => {
+        console.log("새 유저 저장 완료:", data);
+        alert(`환영합니다, ${data.name}님!`);
+      })
+      .catch(err => {
+        console.error("저장 에러:", err);
+        alert("유저 저장 실패");
+      });
     });
   </script>
 </body>
