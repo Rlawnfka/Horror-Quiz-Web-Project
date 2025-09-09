@@ -12,8 +12,8 @@ function triggerJumpscare() {
 
   // 이미지 랜덤 선택
   const images = [];
-  for (let i = 1; i <= 10; i++) {
-    images.push(`./assets/jump-scares/jump-scare-0${i}.png`);
+  for (let i = 1; i <= 9; i++) {
+    images.push(`./assets/jump-scares/jump-scare-${i}.png`);
   }
   const randomImg = images[Math.floor(Math.random() * images.length)];
 
@@ -30,8 +30,7 @@ function triggerJumpscare() {
   scareImg.style.pointerEvents = "none";
   document.body.appendChild(scareImg);
 
-  // 2초 후 제거
   setTimeout(() => {
     scareImg.remove();
-  }, 2000);
+  }, 1000);
 }
