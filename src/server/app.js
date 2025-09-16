@@ -6,7 +6,7 @@ const mysql = require('mysql');
 const db = mysql.createConnection({
     host : "localhost",
     user : "root",
-    password:"0812",
+    password:"",
     database : "find_the_answer"
 });
 
@@ -26,7 +26,7 @@ app.get("/answers/:quizId", (req, res) => {
     const quizId = req.params.quizId;
     const sql = "SELECT * FROM quiz_answers WHERE quiz_id = ?";
     db.query(sql, [quizId], (err, results) => {
-        if (err) throw err;
+        if (err) throw err;    
         res.json(results);
     });
 });
