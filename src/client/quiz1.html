@@ -11,27 +11,35 @@
       <h1 class="title">Quiz</h1>
       <p class="subtitle">이집트의 수도는?</p>
 
-      <script type="text/javascript" src="/src/client/scripts/jumpscare.js"></script>
+      <script type="text/javascript" src="./scripts/jumpscare.js"></script>
 
 
       <div class="input-container">
-        <button class="choice">알렉산드리아</button>
-        <button class="choice">카이로</button>
-        <button class="choice">룩소르</button>
-        <button class="choice">아스완</button>
+        <button class="choice" data-url="quiz2.html">알렉산드리아</button>
+        <button class="choice" data-url="quiz2.html">카이로</button>
+        <button class="choice" data-url="quiz2.html">룩소르</button>
+        <button class="choice" data-url="quiz2.html">아스완</button>
       </div>
     </div>
 
-    <script>
-  // 모든 선택지 버튼 가져오기
-  const buttons = document.querySelectorAll(".choice");
+<script>
+const buttons = document.querySelectorAll(".choice");
 
-  // 클릭하면 jumpscare 실행
-  buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      triggerJumpscare();
-    });
+buttons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    console.log("버튼 클릭됨:", btn.dataset.url);
+
+    // jumpscare 실행
+    // triggerJumpscare();
+
+    // 2초 뒤 다음 페이지로 이동
+    setTimeout(() => {
+      console.log("이동 시도:", btn.dataset.url);
+      window.location.href = btn.dataset.url;
+    },);
+    // , 2000);
   });
+});
 </script>
 
   </body>
