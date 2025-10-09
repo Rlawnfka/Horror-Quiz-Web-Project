@@ -34,7 +34,6 @@
         alert("닉네임을 입력해주세요!");
         return;
       } else if (value.length > 10) {
-        event.preventDefault();
         alert("닉네임은 10글자를 넘을 수 없습니다!");
         return;
       }
@@ -43,14 +42,22 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: value })
       })
-        .then(res => res.json())
+        .then(res => {
+          if (res.status === 409){
+            alert("중복된 아이디입니다!");
+            throw new Error("Duplicate nickname");
+          }
+          return res.json();
+        })
         .then(data => {
         console.log("새 유저 저장 완료:", data);
         alert(`환영합니다, ${data.name}님!`);
       })
       .catch(err => {
-        console.error("저장 에러:", err);
-        alert("유저 저장 실패");
+        if(err.message !== "Duplicate nickname"){
+          console.error("저장 에러:", err);
+          alert("유저 저장 실패");
+        }
       });
     });
   </script>
