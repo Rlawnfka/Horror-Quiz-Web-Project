@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require("express"); //express 연결
 const app = express();
 const mysql = require('mysql');
 
@@ -15,14 +15,15 @@ db.connect(err => {
     console.log("MySQL 연결 성공");
 });
 
-app.get("/answers", (req, res) => {
+app.get("/answers", (req, res) => { // 문제 답들 가져오기
     const sql = "SELECT * FROM quiz_answers";
     db.query(sql, (err, results) => {
         if (err) throw err;
         res.json(results);
     });
 });
-app.get("/answers/:quizId", (req, res) => {
+
+app.get("/answers/:quizId", (req, res) => { // 퀴즈 ID 가져오기
     const quizId = req.params.quizId;
     const sql = "SELECT * FROM quiz_answers WHERE quiz_id = ?";
     db.query(sql, [quizId], (err, results) => {
@@ -58,3 +59,4 @@ app.post("/users", (req, res) => {
 
 const path = require("path");
 app.use(express.static(path.join(__dirname, "../client")));
+app.use("/assets", express.static(path.join(__dirname, "../client/assets")));
