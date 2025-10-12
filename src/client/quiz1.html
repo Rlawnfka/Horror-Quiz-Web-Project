@@ -9,37 +9,51 @@
   <body>
     <div class="container">
       <h1 class="title">Quiz</h1>
-      <p class="subtitle">이집트의 수도는?</p>
+      <p class="subtitle" id="question">문제 불러오기</p>
 
       <script type="text/javascript" src="./scripts/jumpscare.js"></script>
 
 
       <div class="input-container">
-        <button class="choice" data-url="quiz2.html">알렉산드리아</button>
-        <button class="choice" data-url="quiz2.html">카이로</button>
-        <button class="choice" data-url="quiz2.html">룩소르</button>
-        <button class="choice" data-url="quiz2.html">아스완</button>
+        <button class="choice"></button>
+        <button class="choice"></button>
+        <button class="choice"></button>
+        <button class="choice"></button>
       </div>
     </div>
 
 <script>
-const buttons = document.querySelectorAll(".choice");
+async function loadQuiz() {
+        try {
+          const res = await fetch("http://localhost:3000/quiz");
+          const quiz = await res.json();
 
-buttons.forEach(btn => {
-  btn.addEventListener("click", () => {
-    console.log("버튼 클릭됨:", btn.dataset.url);
+          document.getElementById("question").textContent = quiz.question;
 
-    // jumpscare 실행
-    // triggerJumpscare();
+          const buttons = document.querySelectorAll(".choice");
 
-    // 2초 뒤 다음 페이지로 이동
-    setTimeout(() => {
-      console.log("이동 시도:", btn.dataset.url);
-      window.location.href = btn.dataset.url;
-    },);
-    // , 2000);
-  });
-});
+          buttons.forEach((btn, i) => {
+            btn.textContent = quiz.answers[i].content;
+            btn.onclick = () => checkAnswer(btn.textContent, quiz.answer);
+          });
+        } catch (err) {
+          console.error("퀴즈 불러오기 실패:", err);
+          alert("서버에서 퀴즈를 가져오지 못했습니다.");
+        }
+      }
+
+      // ✅ 정답 확인
+      function checkAnswer(selected, correct) {
+        if (selected === correct) {
+          alert("정답입니다 다음 문제로 넘어갑니다.");
+          loadQuiz(); // 다시 랜덤 퀴즈 로드
+        } else {
+          alert("틀렸습니다 다시 시도해보세요!");
+        }
+      }
+
+      // 페이지 로드 시 첫 퀴즈 가져오기
+      loadQuiz();
 </script>
 
   </body>
