@@ -25,24 +25,42 @@
 <script>
 async function loadQuiz() {
         try {
-          const res = await fetch("http://localhost:3000/quiz");
+          const res = await fetch("/quiz");
+          if (!res.ok) throw new Error("HTTP 오류: " + res.status);
           const quiz = await res.json();
+
+          if (!quiz.answers || quiz.answers.length === 0) {
+              alert("퀴즈 데이터가 없습니다.");
+              return;
+          }
 
           document.getElementById("question").textContent = quiz.question;
 
           const buttons = document.querySelectorAll(".choice");
 
           buttons.forEach((btn, i) => {
-            btn.textContent = quiz.answers[i].content;
-            btn.onclick = () => checkAnswer(btn.textContent, quiz.answer);
+            if (quiz.answers[i]) {
+              btn.textContent = quiz.answers[i].content;
+              btn.onclick = () => {
+                if (quiz.answers[i].is_correct === 1) {
+                  alert("정답입니다 다음 문제로 넘어갑니다.");
+                  loadQuiz();
+                } else {
+                  alert("틀렸습니다 다시 시도해보세요!");
+                }
+              }
+            } else {
+              btn.style.display = "none";
+            }
           });
+
         } catch (err) {
           console.error("퀴즈 불러오기 실패:", err);
           alert("서버에서 퀴즈를 가져오지 못했습니다.");
         }
       }
 
-      // ✅ 정답 확인
+      // 정답 확인
       function checkAnswer(selected, correct) {
         if (selected === correct) {
           alert("정답입니다 다음 문제로 넘어갑니다.");

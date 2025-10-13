@@ -18,6 +18,44 @@ db.connect(err => {
     console.log("MySQL 연결 성공");
 });
 
+app.get("/quiz", (req, res) => {
+  // 랜덤으로 문제 1개 가져오기
+  const quizSql = "SELECT * FROM quiz ORDER BY RAND() LIMIT 1;";
+
+  db.query(quizSql, (err, quizResults) => {
+    if (err) {
+      console.error("문제 조회 에러:", err);
+      return res.status(500).json({ error: "문제 조회 실패" });
+    }
+
+    if (quizResults.length === 0) {
+      return res.status(404).json({ error: "퀴즈가 없습니다." });
+    }
+
+    const quiz = quizResults[0]; // 랜덤 문제 1개
+    const quizId = quiz.id;
+
+    // 문제의 보기 4개 가져오기
+    const answerSql = "SELECT id, answer AS content, is_correct FROM quiz_answers WHERE quiz_id = ?;";
+
+    db.query(answerSql, [quizId], (err, answerResults) => {
+      if (err) {
+        console.error("답변 조회 에러:", err);
+        return res.status(500).json({ error: "답변 조회 실패" });
+      }
+
+      // 최종 데이터 구성
+      const response = {
+        quiz_id: quizId,
+        question: quiz.problem,
+        answers: answerResults,
+      };
+
+      res.json(response);
+    });
+  });
+});
+
 app.get("/answers", (req, res) => { // 문제 답들 가져오기
     const sql = "SELECT * FROM quiz_answers";
     db.query(sql, (err, results) => {
