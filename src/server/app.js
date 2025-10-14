@@ -1,12 +1,13 @@
 const express = require("express"); //express 연결
 const app = express();
 const mysql = require('mysql');
+const path = require("path");
 app.use(express.static(path.join(__dirname, "../client")));
 
 const db = mysql.createConnection({
     host : "localhost",
     user : "root",
-    password:"",
+    password:"0812",
     database : "find_the_answer"
 });
 
