@@ -94,7 +94,6 @@ function checkAnswer(choice, answer){
     } else {
         //갑툭튀 이미지 DB에서 불러오기
     }
-    questionIndex++;
 
     if(type === "normal"){
         questionIndex++;
