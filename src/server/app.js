@@ -1,10 +1,7 @@
 const express = require("express"); //express 연결
 const app = express();
 const mysql = require('mysql');
-const cors = require("cors");
-app.use(cors({ origin: "*" }));
-app.use(express.json());
-
+app.use(express.static(path.join(__dirname, "../client")));
 
 const db = mysql.createConnection({
     host : "localhost",
@@ -15,48 +12,68 @@ const db = mysql.createConnection({
 
 db.connect(err => {
     if(err) throw err;
-    console.log("MySQL 연결 성공");
+    console.log("MySQL 연결 성공!!!!!");
 });
 
-app.get("/quiz", (req, res) => {
-  // 랜덤으로 문제 1개 가져오기
-  const quizSql = "SELECT * FROM quiz ORDER BY RAND() LIMIT 1;";
+app.use("/assets", express.static(path.join(__dirname, "../client/assets")));
 
-  db.query(quizSql, (err, quizResults) => {
-    if (err) {
-      console.error("문제 조회 에러:", err);
-      return res.status(500).json({ error: "문제 조회 실패" });
-    }
+app.get("/assets/fileinfo/:fileName", (req,res) => {
+  const fileName = req.params.fileName;
+  const sql = "SELECT * FROM assets WHERE file_name = ?";
+  
+  db.query(sql, [fileName], (err,results) => {
+    if (err) return res.status(500).send("DB ERROR!!");
+    if (results.length === 0) return res.status(404).send("IMAGE NOT FOUND!!");
 
-    if (quizResults.length === 0) {
-      return res.status(404).json({ error: "퀴즈가 없습니다." });
-    }
+    const asset = results[0];
 
-    const quiz = quizResults[0]; // 랜덤 문제 1개
-    const quizId = quiz.id;
-
-    // 문제의 보기 4개 가져오기
-    const answerSql = "SELECT id, answer AS content, is_correct FROM quiz_answers WHERE quiz_id = ?;";
-
-    db.query(answerSql, [quizId], (err, answerResults) => {
-      if (err) {
-        console.error("답변 조회 에러:", err);
-        return res.status(500).json({ error: "답변 조회 실패" });
-      }
-
-      // 최종 데이터 구성
-      const response = {
-        quiz_id: quizId,
-        question: quiz.problem,
-        answers: answerResults,
-      };
-
-      res.json(response);
-    });
+    asset.file_path = `/assets/images/${asset.file_name}`;
+    res.json(asset);
   });
 });
 
-app.get("/answers", (req, res) => { // 문제 답들 가져오기
+app.get('/backgrounds/normal', (req,res) => {
+  const sql = "SELECT file_path, file_name FROM assets WHERE file_name = 'quiz-background.png'";
+  db.query(sql, (err,result) => {
+    if(err){
+      console.error("배경 DB 오류!!!!",err);
+      return res.status(500).json({error : "DB 오류"});
+    }
+    if(result.length === 0) {
+      return res.status(404).json({error : "배경 이미지 없음!!!!!"});
+    }
+    res.json(result[0]);
+  });
+});
+
+app.get("/quiz/:type", (req, res) => {
+  const type = req.params.type;
+  const sql = "SELECT * FROM quiz WHERE quiz_type = ?";
+
+  db.query(sql,[type],(err,results)=> {
+    if(err){
+      return res.status(500).json({error : "DB오류!!!!!"});
+    }
+    const formatted = results.map(q => {
+      let choicesArray = [];
+      if(typeof q.choices === "string" && q.choices.length > 0){
+        choicesArray = q.choices.split(",").map(a => a.trim());
+      }
+
+      return {
+        id : q.id,
+        question : q.problem || q.question,
+        answer : q.answer,
+        choices : choicesArray,
+        quiz_type : q.quiz_type
+      };
+    });
+    res.json(formatted);
+  })
+});
+
+// 문제 답들 가져오기
+app.get("/quiz_answers", (req, res) => {
     const sql = "SELECT * FROM quiz_answers";
     db.query(sql, (err, results) => {
         if (err) throw err;
@@ -64,7 +81,8 @@ app.get("/answers", (req, res) => { // 문제 답들 가져오기
     });
 });
 
-app.get("/answers/:quizId", (req, res) => { // 퀴즈 ID 가져오기
+// 퀴즈 ID 가져오기
+app.get("/quiz_answers/:quizId", (req, res) => { 
     const quizId = req.params.quizId;
     const sql = "SELECT * FROM quiz_answers WHERE quiz_id = ?";
     db.query(sql, [quizId], (err, results) => {
@@ -72,10 +90,6 @@ app.get("/answers/:quizId", (req, res) => { // 퀴즈 ID 가져오기
         res.json(results);
     });
 });
-
-app.listen(3000, () => {
-    console.log("서버 실행 중, http://localhost:3000/answers")
-})
 
 // users 전체 조회
 app.get("/users", (req, res) => {
@@ -101,8 +115,8 @@ app.get("/users", (req, res) => {
 // user 추가 (닉네임 중복 체크 포함)
 app.post("/users", (req, res) => {
   const { name } = req.body;
-
   const checkQuery = "SELECT * FROM users WHERE name = ?";
+
   db.query(checkQuery, [name], (err, results) => {
     if (err) {
       console.error("DB 조회 에러:", err);
@@ -126,6 +140,7 @@ app.post("/users", (req, res) => {
     });
   });
 });
-const path = require("path");
-app.use(express.static(path.join(__dirname, "../client")));
-app.use("/assets", express.static(path.join(__dirname, "../client/assets")));
+
+app.listen(3000, () => {
+    console.log("서버 실행 중, http://localhost:3000/main.html")
+});

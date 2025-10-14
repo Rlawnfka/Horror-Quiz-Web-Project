@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WelCome!</title>
+    <title>Find the answer!</title>
     <link rel="stylesheet" href="./styles/main.css">
 </head>
 <body>
   <div class="container">
     <h1 class="title">Find The Answer!</h1>
     <p class="subtitle">전체화면으로 바꿔주세요. (F11)</p>
-
-    <form class="form-container" action="/submit" method="POST" novalidate>
+    <form class="form-container" novalidate>
       <div class="input-container">
         <input type="text" name="nickname" class="nickname-input" placeholder="닉네임을 입력하세요">
         <button type="submit" class="main-button">시작하기</button>
@@ -19,7 +18,6 @@
       <div class="character"></div>
     </form>
   </div>
-
   <script>
     const form = document.querySelector(".form-container");
     const input = document.querySelector(".nickname-input");
@@ -62,5 +60,6 @@
       });
     });
   </script>
+  <script src="./scripts/main.js"></script>
 </body>
 </html>

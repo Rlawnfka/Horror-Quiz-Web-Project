@@ -20,9 +20,7 @@ body {
   background: url('../assets/images/main-page.png') no-repeat center center fixed;
     min-height: 100vh;
     position: relative;
-     /* overflow: hidden; */
 }
-
 
 .container {
     height: 100vh;
