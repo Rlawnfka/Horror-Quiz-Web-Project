@@ -21,17 +21,23 @@ function shuffle(array){
 }
 
 async function startGame(){
+    // 일반 퀴즈 불러오기
     normalQuestions = await loadQuestions("normal");
-    horrorQuestions = await loadQuestions("horror");
+    normalQuestions = shuffle(normalQuestions).slice(0,5);
 
-    normalQuestions = shuffle(normalQuestions);
-    normalQuestions = normalQuestions.slice(0,5);
+    // 호러 퀴즈 불러오기
+    const allHorror = await loadQuestions("horror");
+    horrorQuestions = allHorror.filter(q => q.id >= 6 && q.id <= 14);
+    horrorQuestions = shuffle(horrorQuestions);
+
     showQuestion();
 }
 async function showQuestion(){
     let q;
     if(type === "normal") {
         q = normalQuestions[questionIndex];
+
+        // 일반 배경 불러오기
         fetch(`/backgrounds/normal`)
         .then(res => res.json())
         .then(asset => {
@@ -41,30 +47,32 @@ async function showQuestion(){
         .catch(err => {
             console.error("배경 이미지 불러오기 실패!!!",err);
         });
-    }else {
-        q = getRandomHorrorQuestion();
-        ////// 결과 화면 넣어야함 /////
+    }else if(type === "horror"){
+        q = horrorQuestions[questionIndex];
         if(!q){
             console.log("공포 문제 모두 완료!!!");
             return;
         }
+
         const horrorBg = await getRandomHorrorBackground();
         const bgDiv = document.getElementById("background");
         ////// 랜덤 공포 배경 넣어야함 //////
-       bgDiv.style.backgroundImage = `url(${horrorBg})`; 
+        bgDiv.style.backgroundImage = `url(${horrorBg})`; 
     }
     // 문제 표시
-    document.getElementById("question").textContent = q.question;
-    // 문항 버튼 그리기
+    const questionDiv = document.getElementById("question");
     const choicesDiv = document.getElementById("choices");
-    choicesDiv.innerHTML = "";
 
+    questionDiv.textContent = q.question;
+    choicesDiv.innerHTML = "";
+    document.getElementById("question").textContent = q.question;
+
+    // 문항 버튼 그리기
      if(!q.choices || q.choices.length === 0){
         console.error("choices 배열이 비어 있음!");
         return;
     }
     // 문항 버튼 그리기
-
     q.choices.forEach(choice => {
         const btn = document.createElement("button");
         btn.textContent = choice;
@@ -90,13 +98,14 @@ async function getRandomHorrorBackground() {
 
 function checkAnswer(choice, answer){
     if(choice === answer) {
-        // 다음 문제
+        console.log("정답!");
     } else {
-        //갑툭튀 이미지 DB에서 불러오기
+        console.log("오답!")
+        // TODO : 갑툭튀 이미지 넣을 부분
     }
+    questionIndex++;
 
     if(type === "normal"){
-        questionIndex++;
         if(questionIndex >= normalQuestions.length){
             type = "horror";
             questionIndex = 0;
