@@ -10,7 +10,7 @@ app.use(express.json()); // ✅ 여기에 두는 게 올바른 위치!
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "0812",
+  password: "",
   database: "find_the_answer"
 });
 
