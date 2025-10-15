@@ -1,5 +1,5 @@
 const playerName = localStorage.getItem('playerName');
-
+// TODO : 만약 공포 모드에서 특정한 선택지를 고르면 갑툭튀가 튀어나옴
 let type = "normal";
 let questionIndex = 0;
 let normalQuestions = [];
@@ -30,6 +30,14 @@ async function startGame(){
     horrorQuestions = allHorror.filter(q => q.id >= 6 && q.id <= 14);
     horrorQuestions = shuffle(horrorQuestions);
 
+    const normalHorror = allHorror.filter(q=>q.id >=6 && q.id<=14 && q.id !=9 && q.id!==10);
+    // 즉사 문제
+    const deadly = allHorror.filter(q => q.id === 9 || q.id === 10);
+    // 30% 확률
+    const finalDeadly = deadly.filter(()=>Math.random() < 0.3);
+
+    horrorQuestions = shuffle([...normalHorror, ...finalDeadly]);
+    
     showQuestion();
 }
 async function showQuestion(){

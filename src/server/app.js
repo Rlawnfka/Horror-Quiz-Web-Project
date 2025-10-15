@@ -4,9 +4,9 @@ const mysql = require('mysql');
 const path = require("path");
 
 app.use(express.static(path.join(__dirname, "../client")));
-app.use(express.json()); // ✅ 여기에 두는 게 올바른 위치!
+app.use(express.json()); 
 
-// ✅ MySQL 연결 설정
+// MySQL 연결 설정
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -16,13 +16,13 @@ const db = mysql.createConnection({
 
 db.connect(err => {
   if (err) throw err;
-  console.log("✅ MySQL 연결 성공!");
+  console.log("MySQL 연결 성공!!!");
 });
 
-// ✅ assets 정적 폴더
+// assets 정적 폴더
 app.use("/assets", express.static(path.join(__dirname, "../client/assets")));
 
-// ✅ 특정 파일 정보 조회
+// 특정 파일 정보 조회
 app.get("/assets/fileinfo/:fileName", (req, res) => {
   const fileName = req.params.fileName;
   const sql = "SELECT * FROM assets WHERE file_name = ?";
@@ -38,7 +38,7 @@ app.get("/assets/fileinfo/:fileName", (req, res) => {
 });
 
 
-// ✅ 일반 배경
+// 일반 배경
 app.get("/backgrounds/normal", (req, res) => {
   const sql = "SELECT file_path, file_name FROM assets WHERE file_name = 'quiz-background.png'";
   db.query(sql, (err, result) => {
@@ -54,7 +54,7 @@ app.get("/backgrounds/normal", (req, res) => {
 });
 
 
-// ✅ 공포 배경 (랜덤 1개)
+// 공포 배경
 app.get("/backgrounds/horror", (req, res) => {
   const sql = "SELECT file_path, file_name FROM assets WHERE category = 'image' AND file_name LIKE 'horror%'";
   db.query(sql, (err, results) => {
@@ -73,7 +73,7 @@ app.get("/backgrounds/horror", (req, res) => {
 });
 
 
-// ✅ 일반 퀴즈
+// 일반 퀴즈
 app.get("/quiz/normal", (req, res) => {
   const sql = "SELECT * FROM quiz WHERE quiz_type = 'normal'";
   db.query(sql, (err, results) => {
@@ -95,7 +95,7 @@ app.get("/quiz/normal", (req, res) => {
 });
 
 
-// ✅ 공포 퀴즈 (id 6~14만)
+// 공포 퀴즈 (id 6~14만)
 app.get("/quiz/horror", (req, res) => {
   const sql = "SELECT * FROM quiz WHERE quiz_type = 'horror' AND id BETWEEN 6 AND 14";
   db.query(sql, (err, results) => {
@@ -121,7 +121,7 @@ app.get("/quiz/horror", (req, res) => {
 });
 
 
-// ✅ users 조회
+// users 조회
 app.get("/users", (req, res) => {
   const sql = "SELECT * FROM users";
   db.query(sql, (err, results) => {
@@ -130,7 +130,7 @@ app.get("/users", (req, res) => {
   });
 });
 
-// ✅ users 추가 (중복 체크 포함)
+// users 추가 (중복 체크 포함)
 app.post("/users", (req, res) => {
   const { name } = req.body;
   const checkQuery = "SELECT * FROM users WHERE name = ?";
@@ -157,7 +157,7 @@ app.post("/users", (req, res) => {
 });
 
 
-// ✅ 서버 실행
+// 서버 실행
 app.listen(3000, () => {
   console.log("🚀 서버 실행 중! http://localhost:3000/main.html");
 });
