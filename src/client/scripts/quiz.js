@@ -110,6 +110,8 @@ function checkAnswer(choice, answer){
     } else {
         console.log("오답!")
         // TODO : 갑툭튀 이미지 넣을 부분
+        // 오디오도 추가!!
+        // 다시 살아나는 것도 고려 ex)5초 안에 화면 15번 연타
     }
     questionIndex++;
 
