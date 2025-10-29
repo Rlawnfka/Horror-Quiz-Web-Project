@@ -10,7 +10,7 @@ app.use(express.json());
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "",
+  password: "0812",
   database: "find_the_answer"
 });
 
@@ -119,6 +119,16 @@ app.get("/quiz/horror", (req, res) => {
     res.json(formatted);
   });
 });
+app.get("/quiz/horror/ending",(req,res)=>{
+  const sql = "SELECT * FROM quiz WHERE quiz_type = 'horror' AND id = 15";
+  db.query(sql, (err, result)=>{
+    if(err){
+      console.error("공포 퀴즈 DB 오류!!", err);
+      return res.status(500).json({ error: "DB 오류 발생!" });
+    }
+    
+  })
+})
 
 
 // users 조회

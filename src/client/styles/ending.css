@@ -1,0 +1,35 @@
+@font-face {
+    font-family: 'Cafe24Lovingu';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Lovingu.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+* {
+    font-family: 'Cafe24Lovingu';
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+p{
+    font-size: 25px;
+}
+.please{
+    margin-left: 140px;
+    padding-top: 100px;
+
+}
+.kitty{
+    text-align: center;
+    margin-top: 200px;
+}
+button{
+    background: none; 
+    border: none; 
+    padding: 0; 
+    cursor: pointer;
+    font-size: 20px;
+    padding-left: 10px;
+}
+button:hover{
+    text-decoration: underline;
+}

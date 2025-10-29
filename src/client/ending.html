@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find the answer!</title>
+    <link rel="stylesheet" href="./styles/ending.css">
+</head>
+<body>
+    <div class="please">
+        <p>안녕, 네가 이 게임을 끝내주길 바<br>래.</p>
+    </div>
+    
+    <div class="kitty">
+        <div class="choice">
+        <p>이 게임을 끝내주겠니?</p>
+            <div class="choiceBtn">
+                <button id="yes" onclick="yes()">(확인)</button> <!-- 결과 화면 -->
+                <button id="no" onclick="no()">(취소)</button> <!-- 갑툭튀 -->
+            </div>
+        </div>
+        <img src="./assets/images/kitty-crying.png" alt="kitty" width="250">
+    </div>
+    <script>
+        function yes(){
+            window.location.href = 'result.html';
+        }
+        function no(){
+            // 이상 메인화면
+            // 갑툭튀
+        }
+    </script>
+</body>
+</html>

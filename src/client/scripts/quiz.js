@@ -5,8 +5,6 @@ let questionIndex = 0;
 let normalQuestions = [];
 let horrorQuestions = [];
 
-const NORMAL_BACKGROUND = "quiz-background.png"
-
 async function loadQuestions(quiz_type) {
     const res = await fetch(`/quiz/${quiz_type}`);
     return await res.json();
