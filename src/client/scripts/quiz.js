@@ -32,7 +32,7 @@ async function startGame(){
     // 즉사 문제
     const deadly = allHorror.filter(q => q.id === 9 || q.id === 10);
     // 30% 확률
-    const finalDeadly = deadly.filter(()=>Math.random() < 0);
+    const finalDeadly = deadly.filter(()=>Math.random() < 0.3);
 
     horrorQuestions = shuffle([...normalHorror, ...finalDeadly]);
     
@@ -55,14 +55,9 @@ async function showQuestion(){
         });
     }else if(type === "horror"){
         q = horrorQuestions[questionIndex];
-        if(!q){
-            console.log("공포 문제 모두 완료!!!");
-            return;
-        }
 
         const horrorBg = await getRandomHorrorBackground();
         const bgDiv = document.getElementById("background");
-        ////// 랜덤 공포 배경 넣어야함 //////
         bgDiv.style.backgroundImage = `url(${horrorBg})`; 
     }
     // 문제 표시
@@ -71,11 +66,30 @@ async function showQuestion(){
 
     questionDiv.textContent = q.question;
     choicesDiv.innerHTML = "";
-    document.getElementById("question").textContent = q.question;
 
     // 문항 버튼 그리기
      if(!q.choices || q.choices.length === 0){
-        console.error("choices 배열이 비어 있음!");
+        const deadlyRes = await fetch(`/horror/${q.id}`);
+        const deadlyData = await deadlyRes.json();
+
+        const img = document.createElement("img");
+        img.src = deadlyData.image_path;
+        img.style.width = "300px";
+        img.style.cursor = "pointer";
+
+        const audio = new Audio(deadlyData.sound_path);
+
+        img.addEventListener("click", () => {
+            audio.play();
+        });
+        audio.addEventListener("ended", () => {
+            triggerJumpscare();
+            setTimeout(() => {
+                window.location.href = "main.html";
+            }, 1000);
+        });
+        // choicesDiv.innerHTML = "";
+        choicesDiv.appendChild(img);
         return;
     }
     // 문항 버튼 그리기
@@ -109,8 +123,6 @@ function checkAnswer(choice, answer){
         if(type === "horror"){
             triggerJumpscare();
         }
-    }else{
-        alert("오답!");
     }
     questionIndex++
     moveToNextQuestion();

@@ -130,6 +130,39 @@ app.get("/backgrounds/horrorEnding", (req, res) => {
     });
 });
 
+// 즉사 문제 이미지 불러오기
+app.get("/horror/:id", (req,res)=>{
+  const quizId = parseInt(req.params.id);
+
+  let imageId, soundId;
+  if(quizId === 9) {
+    imageId = 8;
+    soundId = 27;
+  }else if(quizId === 10) {
+    imageId = 7;
+    soundId = 30;
+  }
+
+  const sql = "SELECT id, file_name FROM assets WHERE id IN (?, ?)";
+  db.query(sql, [soundId, imageId], (err, results) => {
+    if (err) {
+      console.error("DB 오류:", err);
+      return res.status(500).json({ error: "DB 오류" });
+    }
+
+    if (results.length < 2)
+      return res.status(404).json({ error: "이미지 또는 사운드 데이터 없음" });
+
+    const image = results.find(r => r.file_name.endsWith(".png"));
+    const sound = results.find(r => r.file_name.endsWith(".mp3"));
+
+    res.json({
+      image_path: `/assets/images/${image.file_name}`,
+      sound_path: `/assets/audios/${sound.file_name}`
+    });
+  });
+});
+
 // users 추가 (중복 체크 포함)
 app.post("/users", (req, res) => {
   const { name } = req.body;
