@@ -32,7 +32,7 @@ async function startGame(){
     // 즉사 문제
     const deadly = allHorror.filter(q => q.id === 9 || q.id === 10);
     // 30% 확률
-    const finalDeadly = deadly.filter(()=>Math.random() < 0.3);
+    const finalDeadly = deadly.filter(()=>Math.random() < 0);
 
     horrorQuestions = shuffle([...normalHorror, ...finalDeadly]);
     
@@ -95,6 +95,7 @@ function getRandomHorrorQuestion() {
     horrorQuestions.splice(index, 1);
     return q;
 }
+
 // 랜덤 공포 배경 이미지 DB에서 불러오기
 async function getRandomHorrorBackground() {
     const res = await fetch(`/backgrounds/horror`);
@@ -103,24 +104,30 @@ async function getRandomHorrorBackground() {
 }
 
 function checkAnswer(choice, answer){
-    if(choice === answer) {
-        console.log("정답!");
-    } else {
-        console.log("오답!")
-        // TODO : 갑툭튀 이미지 넣을 부분
-        // 오디오도 추가!!
-        // 다시 살아나는 것도 고려 ex)5초 안에 화면 15번 연타
+    const isCorrect = (choice === answer);
+    if(isCorrect) {
+        if(type === "horror"){
+            triggerJumpscare();
+        }
+    }else{
+        alert("오답!");
     }
-    questionIndex++;
-
+    questionIndex++
+    moveToNextQuestion();
+}
+function moveToNextQuestion(){
     if(type === "normal"){
         if(questionIndex >= normalQuestions.length){
             type = "horror";
             questionIndex = 0;
         }
-    }else if (type === "horror"){
-
+    }else if(type === "horror"){
+        if(questionIndex >= horrorQuestions.length){
+            window.location.href = "ending.html";
+            return;
+        }
     }
     showQuestion();
 }
+
 startGame();

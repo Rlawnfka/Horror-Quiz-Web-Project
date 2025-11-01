@@ -2,11 +2,11 @@ const express = require("express");
 const app = express();
 const mysql = require('mysql');
 const path = require("path");
-
+// client 폴더 정적 파일 제공 폴더로 지정
 app.use(express.static(path.join(__dirname, "../client")));
 app.use(express.json()); 
 
-// MySQL 연결 설정
+// MySQL 연결
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -22,7 +22,7 @@ db.connect(err => {
 // assets 정적 폴더
 app.use("/assets", express.static(path.join(__dirname, "../client/assets")));
 
-// 특정 파일 정보 조회
+// 특정 정보 DB에서 조회
 app.get("/assets/fileinfo/:fileName", (req, res) => {
   const fileName = req.params.fileName;
   const sql = "SELECT * FROM assets WHERE file_name = ?";
@@ -38,7 +38,7 @@ app.get("/assets/fileinfo/:fileName", (req, res) => {
 });
 
 
-// 일반 배경
+// 일반 배경 이미지 요청
 app.get("/backgrounds/normal", (req, res) => {
   const sql = "SELECT file_path, file_name FROM assets WHERE file_name = 'quiz-background.png'";
   db.query(sql, (err, result) => {
@@ -47,23 +47,24 @@ app.get("/backgrounds/normal", (req, res) => {
       return res.status(500).json({ error: "DB 오류" });
     }
     if (result.length === 0) {
-      return res.status(404).json({ error: "배경 이미지 없음!!!!!" });
+      return res.status(404).json({ error: "이미지가 존재하지 않음ㅠㅠ" });
     }
     res.json(result[0]);
   });
 });
 
 
-// 공포 배경
+// 공포 배경 이미지 요청
 app.get("/backgrounds/horror", (req, res) => {
   const sql = "SELECT file_path, file_name FROM assets WHERE category = 'image' AND file_name LIKE 'horror%'";
+
   db.query(sql, (err, results) => {
     if (err) {
       console.error("공포 배경 DB 오류!!", err);
       return res.status(500).json({ error: "DB 오류" });
     }
     if (results.length === 0) {
-      return res.status(404).json({ error: "공포 배경 이미지 없음!" });
+      return res.status(404).json({ error: "이미지가 존재하지 않음ㅠㅠ" });
     }
 
     const randomIndex = Math.floor(Math.random() * results.length);
@@ -75,6 +76,7 @@ app.get("/backgrounds/horror", (req, res) => {
 
 // 일반 퀴즈
 app.get("/quiz/normal", (req, res) => {
+  // quiz_type = normal 문제 전체 JSON 반환
   const sql = "SELECT * FROM quiz WHERE quiz_type = 'normal'";
   db.query(sql, (err, results) => {
     if (err) {
@@ -84,7 +86,7 @@ app.get("/quiz/normal", (req, res) => {
 
     const formatted = results.map(q => ({
       id: q.id,
-      question: q.problem || q.question,
+      question: q.problem,
       answer: q.answer,
       choices: q.choices ? q.choices.split(",").map(a => a.trim()) : [],
       quiz_type: q.quiz_type
@@ -105,12 +107,12 @@ app.get("/quiz/horror", (req, res) => {
     }
 
     if (results.length === 0) {
-      return res.status(404).json({ error: "호러 문제 없음!" });
+      return res.status(404).json({ error: "문제가 존재하지 않음ㅠㅠ" });
     }
 
     const formatted = results.map(q => ({
       id: q.id,
-      question: q.problem || q.question,
+      question: q.problem,
       answer: q.answer,
       choices: q.choices ? q.choices.split(",").map(c => c.trim()) : [],
       quiz_type: q.quiz_type
@@ -119,25 +121,13 @@ app.get("/quiz/horror", (req, res) => {
     res.json(formatted);
   });
 });
-app.get("/quiz/horror/ending",(req,res)=>{
-  const sql = "SELECT * FROM quiz WHERE quiz_type = 'horror' AND id = 15";
-  db.query(sql, (err, result)=>{
-    if(err){
-      console.error("공포 퀴즈 DB 오류!!", err);
-      return res.status(500).json({ error: "DB 오류 발생!" });
-    }
-    
-  })
-})
-
-
-// users 조회
-app.get("/users", (req, res) => {
-  const sql = "SELECT * FROM users";
-  db.query(sql, (err, results) => {
-    if (err) throw err;
-    res.json(results);
-  });
+app.get("/backgrounds/horrorEnding", (req, res) => {
+    const sql = "SELECT file_path FROM assets WHERE file_name = ?";
+    db.query(sql, ['main-page-weird.png'], (err, results) => {
+        if (err) return res.status(500).json({ error: "DB 오류" });
+        if (results.length === 0) return res.status(404).json({ error: "이미지 없음" });
+        res.json({ file_path: results[0].file_path });
+    });
 });
 
 // users 추가 (중복 체크 포함)
@@ -169,5 +159,5 @@ app.post("/users", (req, res) => {
 
 // 서버 실행
 app.listen(3000, () => {
-  console.log("🚀 서버 실행 중! http://localhost:3000/main.html");
+  console.log("메인화면 : http://localhost:3000/main.html");
 });

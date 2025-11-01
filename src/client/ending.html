@@ -7,12 +7,12 @@
     <link rel="stylesheet" href="./styles/ending.css">
 </head>
 <body>
-    <div class="please">
+    <div id="please">
         <p>안녕, 네가 이 게임을 끝내주길 바<br>래.</p>
     </div>
     
-    <div class="kitty">
-        <div class="choice">
+    <div id="kitty">
+        <div id="choice">
         <p>이 게임을 끝내주겠니?</p>
             <div class="choiceBtn">
                 <button id="yes" onclick="yes()">(확인)</button> <!-- 결과 화면 -->
@@ -21,14 +21,44 @@
         </div>
         <img src="./assets/images/kitty-crying.png" alt="kitty" width="250">
     </div>
+    <script src="./scripts/jumpscare.js"></script>
     <script>
         function yes(){
             window.location.href = 'result.html';
         }
-        function no(){
-            // 이상 메인화면
-            // 갑툭튀
+        async function HorrorEndingBg(){
+            try {
+                const res = await fetch("/backgrounds/horrorEnding");
+                const data = await res.json();
+                // 배경을 적용할 div를 준비
+                let bgDiv = document.getElementById("background");
+                if(!bgDiv){
+                    bgDiv = document.createElement("div");
+                    bgDiv.id = "background";
+                    Object.assign(bgDiv.style, {
+                        position: "fixed", inset: 0, width: "100vw", height: "100vh",
+                        zIndex: "-1", backgroundSize: "cover", backgroundPosition: "center"
+                    });
+                    document.body.appendChild(bgDiv);
+                }
+                bgDiv.style.backgroundImage = `url(${data.file_path})`;
+            } catch (err) {
+                console.error("배경 불러오기 실패", err);
+            }
         }
+       
+        function no(){
+            document.getElementById("please").remove();
+            document.getElementById("kitty").remove();
+            HorrorEndingBg();
+            setTimeout(()=>{
+                triggerJumpscare();
+                setTimeout(()=>{
+                    window.location.href="main.html";
+                },1200);
+            }, 2000);
+        }
+        
     </script>
 </body>
 </html>
