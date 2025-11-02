@@ -1,25 +1,14 @@
-function triggerJumpscare() {
-  // 사운드 랜덤 선택
-  const sounds = [
-    "./assets/audios/Sound1.mp3",
-    "./assets/audios/Sound2.mp3",
-    "./assets/audios/Sound3.mp3",
-    "./assets/audios/Sound4.mp3"
-  ];
-  const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
-  const audio = new Audio(randomSound);
+async function triggerJumpscare() {
+  const res = await fetch("/jumpscare/random");
+  const data = await res.json();
+
+  if(!data.sound_path) return;
+  console.log(data.sound_path);
+  const audio = new Audio(data.sound_path);
   audio.play();
 
-  // 이미지 랜덤 선택
-  const images = [];
-  for (let i = 1; i <= 9; i++) {
-    images.push(`./assets/jump-scares/jump-scare-${i}.png`);
-  }
-  const randomImg = images[Math.floor(Math.random() * images.length)];
-
-  // 이미지 DOM 추가
   const scareImg = document.createElement("img");
-  scareImg.src = randomImg;
+  scareImg.src = data.image_path;
   scareImg.style.position = "fixed";
   scareImg.style.top = "0";
   scareImg.style.left = "0";
@@ -30,7 +19,8 @@ function triggerJumpscare() {
   scareImg.style.pointerEvents = "none";
   document.body.appendChild(scareImg);
 
-  setTimeout(() => {
+  audio.addEventListener("ended", () => {
+    audio.pause();
     scareImg.remove();
-  }, 1000);
+  });
 }
