@@ -24,6 +24,14 @@
     <script src="./scripts/jumpscare.js"></script>
     <script>
         function yes(){
+            const startTime = localStorage.getItem("startTime");
+            const endTime = Date.now();
+
+            if(startTime){
+                const ms = endTime - startTime;
+                const sec = Math.floor(ms / 1000);
+                localStorage.setItem("totalPlayTime", sec);
+            }
             window.location.href = 'result.html';
         }
         async function HorrorEndingBg(){

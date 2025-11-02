@@ -40,6 +40,7 @@ form.addEventListener("submit", async (event) => {
 
     alert(`환영합니다, ${data.name}님!`);
     localStorage.setItem("playerName", data.name);
+    localStorage.setItem("startTime", Date.now());
     window.location.href = "quiz.html";
     
   } catch (err) {
