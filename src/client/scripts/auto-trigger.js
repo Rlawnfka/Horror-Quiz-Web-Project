@@ -232,7 +232,7 @@
   // 클릭: 실제 <button> 또는 role="button" 요소에 한정
   document.addEventListener('click', (e) => {
     const btn = e.target.closest('button, [role="button"], a');
-    if (btn) doTrigger();
+    if (btn) return;
   }, { capture: true });
 
   // 키보드: 활성화된 요소가 버튼 역할이면 Enter / Space로 트리거
