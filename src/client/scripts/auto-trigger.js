@@ -248,3 +248,25 @@
   // window.addEventListener('pointerdown', () => doTrigger(), { once: true });
 
 })();
+
+// 노래 관리 
+window.Sound = {
+  current: null,
+  play(src, loop=false, vol=0.7){
+    if(this.current){
+      this.current.pause();
+      this.current = null;
+    }
+    const audio = new Audio(src);
+    audio.loop = loop;
+    audio.volume = vol;
+    audio.play().catch(()=>{});
+    this.current = audio;
+  },
+  stop(){
+    if(this.current){
+      this.current.pause();
+      this.current = null;
+    }
+  }
+};

@@ -48,3 +48,10 @@ form.addEventListener("submit", async (event) => {
     alert("서버와의 연결 중 문제가 발생했습니다.");
   }
 });
+
+//마우스 클릭음
+document.addEventListener("click", () => {
+  const clickSound = new Audio("./assets/audios/click.mp3");
+  clickSound.volume = 0.7;
+  clickSound.play().catch(() => {});
+});
