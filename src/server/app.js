@@ -167,8 +167,11 @@ app.post("/users", (req, res) => {
   const { name } = req.body;
   const sql = "SELECT * FROM users WHERE name = ?";
 
-  db.query(sql, [name], (err) => {
+  db.query(sql, [name], (err,results) => {
     if (err) console.error("ERROR : ", err);
+    if(results.length > 0){
+      return res.status(409).json({error : "이미 존재하는 이름입니다."})
+    }
     const insert = "INSERT INTO users (name) VALUES (?)";
     db.query(insert, [name], (err, result) => {
       if (err) console.error("ERROR : ", err);
