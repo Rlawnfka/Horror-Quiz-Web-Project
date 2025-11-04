@@ -1,26 +1,91 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Find the answer!</title>
-    <link rel="stylesheet" href="./styles/result.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find the answer!</title>
+  <link rel="stylesheet" href="./styles/result.css">
+
+  <style>
+    /* 크레딧 애니메이션 */
+    .credits {
+      position: fixed;
+      bottom: -100%;
+      width: 100%;
+      text-align: center;
+      animation: rollUp 35s linear forwards;
+    }
+    @keyframes rollUp {
+      from { bottom: -100%; }
+      to { bottom: 100%; }
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      color: #C10F86;
+    }
+
+    .kitty { width: 150px; }
+    .quiz-image { width: 250px; margin-top: 20px; }
+  </style>
 </head>
 <body>
-    <div class="credits">
-        <div class="content">
-            <div class="title-line">
-                <h1>Clear!!!</h1>
-                <img src="./assets/images/kitty-main.png" alt="Hello Kitty" class="kitty">
-            </div>
+  <div class="credits">
+    <div class="content">
+      <div class="title-line">
+        <h1>Clear!!!</h1>
+        <img src="./assets/images/kitty-main.png" alt="Hello Kitty" class="kitty">
+      </div>
 
-            <div class="info-section">
-                <p><span class="label">nickname</span>  승주</p>
-                <p><span class="label">playtime</span>  24:12</p>
-                <p><span class="label">solved problems :</span></p>
-            </div>
-            <img src="./assets/images/quiz-sample.png" alt="solved quiz" class="quiz-image">
-        </div>
+      <div class="info-section">
+        <p><span class="label">nickname</span>  승주</p>
+        <p><span class="label">playtime</span>  24:12</p>
+        <p><span class="label">solved problems :</span></p>
+      </div>
+
+      <img src="./assets/images/quiz-sample.png" alt="solved quiz" class="quiz-image">
     </div>
+  </div>
+
+  <script>
+  window.addEventListener("DOMContentLoaded", () => {
+    // ✅ 1. 기존 브금 전부 정지
+    document.querySelectorAll("audio").forEach(a => {
+      try {
+        a.pause();
+        a.currentTime = 0;
+      } catch {}
+    });
+
+    if (window.currentBgm) {
+      try {
+        window.currentBgm.pause();
+        window.currentBgm.currentTime = 0;
+        window.currentBgm = null;
+      } catch {}
+    }
+
+    // ✅ 2. 크레딧 시작 시점에만 엔딩 브금 재생
+    const endingBgm = new Audio("./assets/audios/ending.mp3");
+    endingBgm.loop = true;
+    endingBgm.volume = 0.6;
+
+    const credits = document.querySelector(".credits");
+    credits.addEventListener("animationstart", () => {
+      // 혹시 남은 오디오 또 정지
+      document.querySelectorAll("audio").forEach(a => {
+        try {
+          a.pause();
+          a.currentTime = 0;
+        } catch {}
+      });
+
+      endingBgm.play().catch(()=>{});
+    });
+  });
+  </script>
 </body>
 </html>
