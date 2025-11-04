@@ -39,8 +39,8 @@ form.addEventListener("submit", async (event) => {
     console.log("새 유저 저장 완료:", data);
 
     alert(`환영합니다, ${data.name}님!`);
-    localStorage.setItem("playerName", data.name);
-    localStorage.setItem("startTime", Date.now());
+    localStorage.setItem("playerName", data.name); // 닉네임 저장
+    localStorage.setItem("startTime", Date.now()); // 타이머 시작
     window.location.href = "quiz.html";
     
   } catch (err) {

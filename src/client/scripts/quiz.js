@@ -1,4 +1,3 @@
-const playerName = localStorage.getItem('playerName');
 let type = "normal";
 let questionIndex = 0;
 let normalQuestions = [];
