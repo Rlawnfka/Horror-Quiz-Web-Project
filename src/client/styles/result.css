@@ -1,0 +1,82 @@
+@font-face {
+    font-family: 'Cafe24Lovingu';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Lovingu.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    margin: 0;
+    background: url('../assets/images/main-page.png');
+    background-size: cover;
+    overflow: hidden;
+    font-family: 'Cafe24Lovingu';
+    color: #C10F86;
+}
+
+.credits {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* 올라가는 부분 */
+.content {
+    position: absolute;
+    bottom: -100%;
+    width: 100%;
+    text-align: center;
+    animation: scrollUp 25s linear forwards;
+    padding-top: 100px;
+}
+
+@keyframes scrollUp {
+    0% { bottom: -100%; }
+    100% { bottom: 100%; }
+}
+
+.title-line {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 0;
+}
+
+h1 {
+    font-family: 'Cafe24Lovingu';
+    font-size: 128px;
+    margin: 0;
+}
+
+.kitty {
+    width: 90px;
+    margin: 0;
+}
+
+.label {
+    font-weight: bold;
+    font-size: 55px;
+}
+
+.info-section {
+    text-align: left;
+    display: inline-block;
+    margin-top: 50px;
+}
+
+.info-section p {
+    font-size: 30px;
+}
+
+.quiz-image {
+    display: block;
+    margin: 30px auto 0 auto;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0.4; }
+    to { opacity: 1; }
+}
