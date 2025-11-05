@@ -11,8 +11,8 @@ app.use(express.json());
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "0812",
-  database: "find_the_answer"
+  password: "",
+  database: "fine_the_answer"
 });
 
 db.connect(err => {
@@ -167,11 +167,8 @@ app.post("/users", (req, res) => {
   const { name } = req.body;
   const sql = "SELECT * FROM users WHERE name = ?";
 
-  db.query(sql, [name], (err,results) => {
+  db.query(sql, [name], (err) => {
     if (err) console.error("ERROR : ", err);
-    if(results.length > 0){
-      return res.status(409).json({error : "이미 존재하는 이름입니다."})
-    }
     const insert = "INSERT INTO users (name) VALUES (?)";
     db.query(insert, [name], (err, result) => {
       if (err) console.error("ERROR : ", err);

@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="./styles/result.css">
 </head>
 <body>
+  <audio id="endingBgm" src="./assets/audios/ending.mp3" autoplay></audio>
   <div class="credits">
     <div class="content">
       <div class="title-line">
@@ -25,7 +26,7 @@
   <script>
   window.addEventListener("DOMContentLoaded", () => {
     // ✅ 1. 기존 브금 전부 정지
-    document.querySelectorAll("audio").forEach(a => {
+    document.querySelectorAll("audios").forEach(a => {
       try {
         a.pause();
         a.currentTime = 0;
@@ -48,7 +49,7 @@
     const credits = document.querySelector(".credits");
     credits.addEventListener("animationstart", () => {
       // 혹시 남은 오디오 또 정지
-      document.querySelectorAll("audio").forEach(a => {
+      document.querySelectorAll("audios").forEach(a => {
         try {
           a.pause();
           a.currentTime = 0;
