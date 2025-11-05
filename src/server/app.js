@@ -11,8 +11,8 @@ app.use(express.json());
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "",
-  database: "fine_the_answer"
+  password: "0812",
+  database: "find_the_answer"
 });
 
 db.connect(err => {
@@ -163,7 +163,7 @@ app.get("/horror/:id", (req, res) => {
     const image = results.find(r => r.file_name.endsWith(".png"));
     const sound = results.find(r => r.file_name.endsWith(".mp3"));
 
-    // ✅ imageId가 7이면 ringing.mp3로 고정
+    // imageId가 7이면 ringing.mp3로 고정
     const soundPath =
       imageId === 7
         ? "/assets/audios/ringing.mp3"
@@ -182,8 +182,11 @@ app.post("/users", (req, res) => {
   const { name } = req.body;
   const sql = "SELECT * FROM users WHERE name = ?";
 
-  db.query(sql, [name], (err) => {
+  db.query(sql, [name], (err,results) => {
     if (err) console.error("ERROR : ", err);
+    if(results.length > 0){
+      return res.status(409).json({error : "이미 존재하는 이름입니다."})
+    }
     const insert = "INSERT INTO users (name) VALUES (?)";
     db.query(insert, [name], (err, result) => {
       if (err) console.error("ERROR : ", err);
