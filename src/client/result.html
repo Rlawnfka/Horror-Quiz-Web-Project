@@ -5,32 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Find the answer!</title>
   <link rel="stylesheet" href="./styles/result.css">
-
-  <style>
-    /* 크레딧 애니메이션 */
-    .credits {
-      position: fixed;
-      bottom: -100%;
-      width: 100%;
-      text-align: center;
-      animation: rollUp 35s linear forwards;
-    }
-    @keyframes rollUp {
-      from { bottom: -100%; }
-      to { bottom: 100%; }
-    }
-
-    .content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-      color: #C10F86;
-    }
-
-    .kitty { width: 150px; }
-    .quiz-image { width: 250px; margin-top: 20px; }
-  </style>
 </head>
 <body>
   <div class="credits">
@@ -44,13 +18,10 @@
                 <p>playtime<span id="playtime"></span></p>
                 <p>solved problems :<span id="solved_problems"></span></p>
             </div>
-            <img src="./assets/images/quiz-sample.png" alt="solved quiz" class="quiz-image">
-        </div>
-    </div>
-    <script src="./scripts/result.js"></script>
+      <img src="./assets/images/quiz-sample.png" alt="solved quiz" class="quiz-image">
     </div>
   </div>
-
+    <script src="./scripts/result.js"></script>
   <script>
   window.addEventListener("DOMContentLoaded", () => {
     // ✅ 1. 기존 브금 전부 정지

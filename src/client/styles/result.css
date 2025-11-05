@@ -52,13 +52,8 @@ h1 {
 }
 
 .kitty {
-    width: 90px;
+    width: 130px;
     margin: 0;
-}
-
-.label {
-    font-weight: bold;
-    font-size: 55px;
 }
 
 .info-section {
@@ -68,10 +63,12 @@ h1 {
 }
 
 .info-section p {
-    font-size: 30px;
+    font-size: 40px;
 }
 
 .quiz-image {
+    width: 250px;
+    margin-top: 20px;
     display: block;
     margin: 30px auto 0 auto;
 }
