@@ -136,31 +136,46 @@ app.get("/backgrounds/horrorEnding", (req, res) => {
 });
 
 // 즉사 문제 이미지 불러오기
-app.get("/horror/:id", (req,res)=>{
-  const quizId = parseInt(req.params.id);
+// 즉사 문제 이미지/사운드
+app.get("/horror/:id", (req, res) => {
+  const quizId = Number(req.params.id);
 
   let imageId, soundId;
-  if(quizId === 9) {
+  if (quizId === 9) {
     imageId = 8;
     soundId = 27;
-  }else if(quizId === 10) {
+  } else if (quizId === 10) {
     imageId = 7;
     soundId = 30;
   }
 
+  if (!imageId || !soundId) {
+    return res.status(400).json({ error: "invalid quizId" });
+  }
+
   const sql = "SELECT id, file_name FROM assets WHERE id IN (?, ?)";
-  db.query(sql, [soundId, imageId], (err, results) => {    
-    if (err) console.error("ERROR : ", err);
+  db.query(sql, [soundId, imageId], (err, results) => {
+    if (err) {
+      console.error("ERROR:", err);
+      return res.status(500).json({ error: "db_failed" });
+    }
 
     const image = results.find(r => r.file_name.endsWith(".png"));
     const sound = results.find(r => r.file_name.endsWith(".mp3"));
 
+    // ✅ imageId가 7이면 ringing.mp3로 고정
+    const soundPath =
+      imageId === 7
+        ? "/assets/sounds/ringing.mp3"
+        : `/assets/sounds/${sound.file_name}`;
+
     res.json({
       image_path: `/assets/images/${image.file_name}`,
-      sound_path: `/assets/audios/${sound.file_name}`
+      sound_path: soundPath
     });
   });
 });
+
 
 // users 추가 (중복 체크 포함)
 app.post("/users", (req, res) => {
