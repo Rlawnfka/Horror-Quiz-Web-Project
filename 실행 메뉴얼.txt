@@ -1,0 +1,15 @@
+1. DB 연결 정보 설정
+src/server/.env 파일에 DB 연결 설정이 있습니다.
+⚠️비밀번호와 DB이름은 본인 환경에 맞게 수정해야 합니다.
+
+2. 서버 실행
+find-the-answer-project/src/server로 경로 이동 후
+node app.js 를 작성하고 enter해주세요.
+
+3. 클라이언트 접속
+브라우저에서 다음 주소로 접속합니다.
+http://localhost:3000
+ - 메인 페이지 : main.html
+ - 퀴즈 페이지 : quiz.html
+ - 결과 페이지 : result.html
+ - 엔딩 페이지 : ending.html

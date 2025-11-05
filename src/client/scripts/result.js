@@ -1,13 +1,31 @@
 window.addEventListener("DOMContentLoaded", () => {
   // 플레이어 정보
-  const playerName = localStorage.getItem('playerName');
+  const playerName = localStorage.getItem("playerName");
   const sec = parseInt(localStorage.getItem("totalPlayTime"), 10);
   const nameSpan = document.getElementById("name");
   const timeSpan = document.getElementById("playtime");
 
   let minutes = 0;
   let seconds = 0;
+
   if (playerName && !isNaN(sec)) {
+    // 서버로 유저 정보 전송
+    fetch("/users", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: playerName,
+        play_time: sec
+      })
+    })
+      .then(res => {
+        if (!res.ok) throw new Error("유저 등록 실패");
+        return res.json();
+      })
+      .then(data => console.log("유저 저장 완료:", data))
+      .catch(err => console.error("유저 저장 실패:", err));
+
+    // 화면 표시용
     minutes = Math.floor(sec / 60);
     seconds = sec % 60;
     nameSpan.innerText = ` ${playerName}`;
@@ -47,13 +65,16 @@ window.addEventListener("DOMContentLoaded", () => {
     solvedContainer.innerHTML = "<p>맞춘 문제가 없습니다....</p>";
   } else {
     solvedContainer.innerHTML = `
-        ${correctAnswers.map((q, i) => `
-          <li>
-            <strong>${i + 1}. 문제:</strong> ${q.question}<br>
-            <strong>정답:</strong> ${q.answer}
-            <br>
-          </li>
-        `).join("")}
+      ${correctAnswers
+        .map(
+          (q, i) => `
+        <li>
+          <strong>${i + 1}. 문제:</strong> ${q.question}<br>
+          <strong>정답:</strong> ${q.answer}<br>
+        </li>
+      `
+        )
+        .join("")}
     `;
   }
 

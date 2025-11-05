@@ -22,8 +22,12 @@ form.addEventListener("submit", async (event) => {
     const res = await fetch("/users", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: nickname }),
+      body: JSON.stringify({
+        name: nickname,
+        play_time: 0 // 처음 등록할 때 기본값 0
+      }),
     });
+    
 
     // 응답 상태별 처리
     if (res.status === 409) {
