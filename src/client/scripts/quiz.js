@@ -158,7 +158,7 @@ function moveToNextQuestion(){
         }
 
         // 공포 브금 재생
-        const horrorBgm = new Audio("./assets/audios/horror-sound.mp3");
+        const horrorBgm = new Audio("./assets/audios/horror-audios.mp3");
         horrorBgm.loop = true;
         horrorBgm.volume = 0.5;
         horrorBgm.play().catch(err => console.error("공포 브금 재생 실패:", err));
