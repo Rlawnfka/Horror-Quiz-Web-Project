@@ -25,7 +25,7 @@
     <script src="./scripts/result.js"></script>
   <script>
   window.addEventListener("DOMContentLoaded", () => {
-    // ✅ 1. 기존 브금 전부 정지
+    // 1. 기존 브금 전부 정지
     document.querySelectorAll("audios").forEach(a => {
       try {
         a.pause();
@@ -41,7 +41,7 @@
       } catch {}
     }
 
-    // ✅ 2. 크레딧 시작 시점에만 엔딩 브금 재생
+    // 2. 크레딧 시작 시점에만 엔딩 브금 재생
     const endingBgm = new Audio("./assets/audios/ending.mp3");
     endingBgm.loop = true;
     endingBgm.volume = 0.6;
