@@ -65,9 +65,9 @@ async function startGame() {
     normalQuestions = shuffle((await loadQuestions("normal"))).slice(0, 5);
 
     const allHorror = await loadQuestions("horror");
-    const deadly = allHorror.filter(q => [9, 10].includes(q.id));
-    const normalHorror = allHorror.filter(q => q.id >= 6 && q.id <= 14 && ![9, 10].includes(q.id));
-    const finalDeadly = deadly.filter(() => Math.random() < 0.3);
+    const deadly = allHorror.filter(q => [9,10].includes(q.id));
+    const normalHorror = allHorror.filter(q => q.id >=6 && q.id<=14 && ![9,10].includes(q.id));
+    const finalDeadly = deadly.filter(() => Math.random() <  0.3);
     horrorQuestions = shuffle([...normalHorror, ...finalDeadly]);
 
     showQuestion();
