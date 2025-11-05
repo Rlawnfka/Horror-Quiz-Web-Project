@@ -166,8 +166,8 @@ app.get("/horror/:id", (req, res) => {
     // ✅ imageId가 7이면 ringing.mp3로 고정
     const soundPath =
       imageId === 7
-        ? "/assets/sounds/ringing.mp3"
-        : `/assets/sounds/${sound.file_name}`;
+        ? "/assets/audios/ringing.mp3"
+        : `/assets/audios/${sound.file_name}`;
 
     res.json({
       image_path: `/assets/images/${image.file_name}`,
