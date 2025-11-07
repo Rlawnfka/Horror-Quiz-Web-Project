@@ -23,42 +23,5 @@
     </div>
   </div>
     <script src="./scripts/result.js"></script>
-  <script>
-  window.addEventListener("DOMContentLoaded", () => {
-    // 1. 기존 브금 전부 정지
-    document.querySelectorAll("audios").forEach(a => {
-      try {
-        a.pause();
-        a.currentTime = 0;
-      } catch {}
-    });
-
-    if (window.currentBgm) {
-      try {
-        window.currentBgm.pause();
-        window.currentBgm.currentTime = 0;
-        window.currentBgm = null;
-      } catch {}
-    }
-
-    // 2. 크레딧 시작 시점에만 엔딩 브금 재생
-    const endingBgm = new Audio("./assets/audios/ending.mp3");
-    endingBgm.loop = true;
-    endingBgm.volume = 0.6;
-
-    const credits = document.querySelector(".credits");
-    credits.addEventListener("animationstart", () => {
-      // 혹시 남은 오디오 또 정지
-      document.querySelectorAll("audios").forEach(a => {
-        try {
-          a.pause();
-          a.currentTime = 0;
-        } catch {}
-      });
-
-      endingBgm.play().catch(()=>{});
-    });
-  });
-  </script>
 </body>
 </html>
