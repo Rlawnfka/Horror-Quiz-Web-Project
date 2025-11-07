@@ -165,7 +165,6 @@ app.get("/horror/:id", (req, res) => {
 ////////// Users API ///////////
 
 // 유저 추가 (중복 확인 포함)
-// 유저 추가 (중복 확인 포함)
 app.post("/users", (req, res) => {
   const { name, play_time } = req.body;
 
@@ -182,29 +181,23 @@ app.post("/users", (req, res) => {
     if (err) {
       console.error("DB 조회 실패:", err);
       return res.status(500).json({ error: "DB 조회 실패" });
+    }if (results.length > 0) {
+      return res.status(409).json({ error: "이미 존재하는 닉네임입니다." });
     }
 
-    if (results.length > 0) {
-      // 기존 유저
-      const updateSql = "UPDATE users SET play_time = ? WHERE name = ?";
-      db.query(updateSql, [time, name], err => {
-        if (err) {
-          console.error("DB 업데이트 실패:", err);
-          return res.status(500).json({ error: "DB 업데이트 실패" });
-        }
-        return res.json({ message: "기존 유저 업데이트 완료", name, play_time: time });
+    const insertSql = "INSERT INTO users (name, play_time) VALUES (?, ?)";
+    db.query(insertSql, [name, time], (err, result) => {
+      if (err) {
+        console.error("DB 저장 실패:", err);
+        return res.status(500).json({ error: "DB 저장 실패" });
+      }
+      return res.status(201).json({
+        message: "신규 유저 저장 완료",
+        id: result.insertId,
+        name,
+        play_time: time
       });
-    } else {
-      // 신규 유저
-      const insertSql = "INSERT INTO users (name, play_time) VALUES (?, ?)";
-      db.query(insertSql, [name, time], (err, result) => {
-        if (err) {
-          console.error("DB 저장 실패:", err);
-          return res.status(500).json({ error: "DB 저장 실패" });
-        }
-        return res.json({ message: "신규 유저 저장 완료", id: result.insertId, name, play_time: time });
-      });
-    }
+    });
   });
 });
 
