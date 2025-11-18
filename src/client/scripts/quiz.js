@@ -1,13 +1,13 @@
-let type = "normal";
-let questionIndex = 0;
-let normalQuestions = [];
-let horrorQuestions = [];
-let correctAnswers = [];
+let type = "normal"; // 현재 상태 노말
+let questionIndex = 0; // 몇 번째 문제인지
+let normalQuestions = []; // 일반문제 배열
+let horrorQuestions = []; // 호러문제 배열
+let correctAnswers = []; // 사용자가 맞춘 문제를 저장하는 배열
 
 // 문제 보여주기
 async function showQuestion() {
-    const q = (type === "normal") ? normalQuestions[questionIndex] : horrorQuestions[questionIndex];
-    await setBackground(type);
+    const q = (type === "normal") ? normalQuestions[questionIndex] : horrorQuestions[questionIndex]; // q는 type의 문제 객체
+    await setBackground(type); // 배경을 API에서 받기
 
     const questionDiv = document.getElementById("question");
     const choicesDiv = document.getElementById("choices");
@@ -15,7 +15,7 @@ async function showQuestion() {
     questionDiv.textContent = q.question;
     choicesDiv.innerHTML = "";
 
-    if (type === "normal" && questionIndex === 0) {
+    if (type === "normal" && questionIndex === 0) { // 일반모드 첫문제에서 노래 재생
         if (window.currentBgm) {
             window.currentBgm.pause();
             window.currentBgm.currentTime = 0;
@@ -29,13 +29,13 @@ async function showQuestion() {
         window.currentBgm = bgm;
     }
 
-    if (!q.choices || q.choices.length === 0) {
+    if (!q.choices || q.choices.length === 0) { // choice가 없거나 빈 배열이면 즉사 문제
         await showDeadlyQuestion(q);
         return;
     }
 
     q.choices.forEach(choice => {
-        const btn = document.createElement("button");
+        const btn = document.createElement("button"); // 각 선택지를 버튼으로 생성해서 choiceDiv에 추가
         btn.textContent = choice;
         btn.onclick = () => checkAnswer(choice, q.answer);
         choicesDiv.appendChild(btn);
@@ -44,7 +44,7 @@ async function showQuestion() {
 
 // 문제 불러오기
 async function loadQuestions(quiz_type) {
-    const res = await fetch(`/quiz/${quiz_type}`);
+    const res = await fetch(`/quiz/${quiz_type}`); // 일반 또는 호러
     return await res.json();
 }
 
@@ -62,7 +62,7 @@ async function startGame() {
     localStorage.removeItem("correctAnswers"); // 시작 시 기록 초기화
     correctAnswers = [];
 
-    normalQuestions = shuffle((await loadQuestions("normal"))).slice(0, 5);
+    normalQuestions = shuffle((await loadQuestions("normal"))).slice(0, 5); // 일반문제 상위 5개만 사용
 
     const allHorror = await loadQuestions("horror");
     const deadly = allHorror.filter(q => [9,10].includes(q.id));
@@ -94,7 +94,7 @@ async function showDeadlyQuestion(q) {
     const audio = new Audio(deadlyData.sound_path);
     img.addEventListener("click", () => audio.play());
     audio.addEventListener("ended", () => {
-        triggerJumpscare();
+        triggerJumpscare(); // 점프 스퀘어 호출
         setTimeout(() => window.location.href = "main.html", 900);
     });
 
@@ -112,7 +112,7 @@ function checkAnswer(choice, answer) {
     const isCorrect = (choice === answer);
     if (isCorrect) {
         const currentQuestion = (type === "normal")
-            ? normalQuestions[questionIndex]
+            ? normalQuestions[questionIndex] // 맞춘 문제를 배열에 저장
             : horrorQuestions[questionIndex];
 
         correctAnswers.push({
@@ -121,7 +121,7 @@ function checkAnswer(choice, answer) {
         });
 
         if (type === "horror") {
-            triggerJumpscare();
+            triggerJumpscare(); // 호러모드에서 정답이면 추가로 점프 스케어
         }
     }
 
