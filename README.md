@@ -1,16 +1,21 @@
-🎮 Find The Answer! horror-quiz-web-project
+**🎮 Find The Answer!**
+horror-quiz-web-project
 
-귀여운 퀴즈인 줄 알았지? 근데… 끝까지 갈 수 있을까.
+귀여운 퀴즈인 줄 알았지?
+근데… 끝까지 갈 수 있을까.
 
-🧠 프로젝트 소개
+### 🧠 프로젝트 소개
 
-Find The Answer! 는 상식 퀴즈와 공포 연출을 결합한 반전형 공포 퀴즈 웹 프로젝트입니다.
+Find The Answer! 는
+상식 퀴즈와 공포 연출을 결합한 반전형 공포 퀴즈 웹 프로젝트입니다.
 
-처음에는 밝고 안전한 퀴즈처럼 보이지만, 플레이가 진행될수록 분위기는 점점 불안하고 위협적으로 변합니다.
+처음에는 밝고 안전한 퀴즈처럼 보이지만,
+플레이가 진행될수록 분위기는 점점 불안하고 위협적으로 변합니다.
 
-단순히 문제를 푸는 게임이 아니라 “계속 플레이할 것인가”를 고민하게 만드는 경험을 목표로 합니다.
+단순히 문제를 푸는 게임이 아니라
+“계속 플레이할 것인가”를 고민하게 만드는 경험을 목표로 합니다.
 
-🧩 게임 흐름
+### 🧩 게임 흐름
 
 🌸 초반
 
@@ -28,7 +33,7 @@ Find The Answer! 는 상식 퀴즈와 공포 연출을 결합한 반전형 공�
 
 저주파 사운드
 
-💀 후반
+### 💀 후반
 
 점프스케어
 
@@ -42,7 +47,8 @@ Find The Answer! 는 상식 퀴즈와 공포 연출을 결합한 반전형 공�
 
 거부 시 강제 공포 엔딩 발생
 
-✨ 주요 기능 👤 사용자 시스템
+### ✨ 주요 기능
+👤 사용자 시스템
 
 닉네임 입력
 
@@ -52,7 +58,7 @@ Find The Answer! 는 상식 퀴즈와 공포 연출을 결합한 반전형 공�
 
 엔딩 도달 시 전체 플레이 시간 계산
 
-❓ 퀴즈 시스템
+### ❓ 퀴즈 시스템
 
 normal / horror 퀴즈 분리
 
@@ -84,7 +90,7 @@ normal / horror 퀴즈 분리
 
 통제권을 빼앗는 구조로 불안감 극대화
 
-🔀 엔딩 분기
+### 🔀 엔딩 분기
 
 ✔️ 게임을 끝내겠다는 선택
 
@@ -96,7 +102,8 @@ normal / horror 퀴즈 분리
 
 메인 화면으로 이동
 
-🛠 사용 기술 스택 Frontend
+### 🛠 사용 기술 스택
+Frontend
 
 HTML5
 
@@ -118,11 +125,30 @@ LocalStorage
 
 Canvas 기반 글리치 연출
 
-📁 프로젝트 구조 src ┣ client ┃ ┣ main.html ┃ ┣ quiz.html ┃ ┣ ending.html ┃ ┣ styles ┃ ┃ ┣ main.css ┃ ┃ ┣ quiz.css ┃ ┃ ┗ ending.css ┃ ┗ scripts ┃ ┣ main.js ┃ ┣ quiz.js ┃ ┣ jumpscare.js ┃ ┣ glitch.js ┃ ┗ auto-trigger.js ┗ server ┗ app.js
+### 📁 프로젝트 구조
+`src
+ ┣ client
+ ┃ ┣ main.html
+ ┃ ┣ quiz.html
+ ┃ ┣ ending.html
+ ┃ ┣ styles
+ ┃ ┃ ┣ main.css
+ ┃ ┃ ┣ quiz.css
+ ┃ ┃ ┗ ending.css
+ ┃ ┗ scripts
+ ┃   ┣ main.js
+ ┃   ┣ quiz.js
+ ┃   ┣ jumpscare.js
+ ┃   ┣ glitch.js
+ ┃   ┗ auto-trigger.js
+ ┗ server
+   ┗ app.js
+`
 
-🎯 기획 의도
+### 🎯 기획 의도
 
-이 프로젝트는 단순히 놀래키는 공포가 아니라 심리적인 불쾌함과 긴장감을 목표로 합니다.
+이 프로젝트는
+단순히 놀래키는 공포가 아니라 심리적인 불쾌함과 긴장감을 목표로 합니다.
 
 귀여운 디자인과 갑작스러운 공포의 대비
 
@@ -132,7 +158,7 @@ Canvas 기반 글리치 연출
 
 웹 환경에서도 충분히 강한 공포 경험을 만들 수 있다는 것을 보여주고자 했습니다.
 
-⚠️ 주의 사항
+### ⚠️ 주의 사항
 
 🔳 전체 화면(F11) 플레이 권장
 
